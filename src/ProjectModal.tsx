@@ -1,19 +1,45 @@
 import {useEffect, useState} from 'react';
 
-interface Project {
+type Project = {
     id: number;
     name: string;
     description: string;
-    imageUrl: string;
+    stack: string[];
+    imageUrl?: string;
+    projectUrl: string;
   }
 
 const projects: Project[] = [
     {
       id: 0,
-      name: "Sample Project",
-      description: "This is an arbitrary project description.",
-      imageUrl: "https://via.placeholder.com/300", // Replace with actual image URL
+      name: "Pubchef",
+      description: "Building a full stack web app for users to find and buy home cooked meals from home chefs near them based on certain cuisines/cravings. 'Stay at home' cooks can create postings, manage their profile, and sell food items. This is a long term project and a work in progress.",
+      stack: ["React (JavaScript)", "Bootstrap", "Django (REST Framework)", "SQLLite"],
+      imageUrl: './pubc.png', // Replace with actual image URL
+      projectUrl: "https://github.com/Tcthommyson/ChefFrontEnd",
     },
+    {
+        id: 1,
+        name: "Illini Market",
+        description: "Built a full stack web platform to facilitate the buying and selling of college related items (including school supplies, clothes, game tickets, etc.) between UIUC Students. Implemented similarity searching, CRUD operations, and the OAuth 2.0 protocol with Google API Endpoints. Worked in a team of 4 and submitted the project to HackIllinois 2024.",
+        stack: ["React (TypeScript)", "Chakra UI", "Flask", "Python", "SQLLite"],
+        imageUrl: "https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/002/783/782/datas/original.jpeg", // Replace with actual image URL
+        projectUrl: "https://github.com/anshulg3/Illini-Market",
+      },
+      {
+        id: 2,
+        name: "Personal Portfolio",
+        description: "Built a personal portfolio website to showcase my projects and skills. The website has a responsive and clean design, and is hosted on GitHub Pages.",
+        stack: ["React (Typescript)", "Tailwind CSS"],
+        projectUrl: "",
+      },
+      {
+        id: 3,
+        name: "The G Tool",
+        description: "Tool created with JavaScript that consists of finals grade calculator, word counter, and a college searcher. Used BeautifulSoup4 for the web scraping and implemented the college search algorithm with JavaScript.",
+        stack: ["JavaScript", "HTML/CSS", "Python (for web scraping)"],
+        projectUrl: "https://nehangit.github.io/jtool.html",
+      },
     // Add more projects as needed
 ];
 
@@ -37,19 +63,16 @@ const ProjectModal = ({ projectid, setOpen }: { projectid: number, setOpen: Reac
     };
 
     return (
-    <div id="readProductModal" tabIndex={-1} className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-modal md:h-full">
-    <div className="relative p-4 w-full max-w-xl h-full md:h-auto">
+    <div id="readProductModal" tabIndex={-1} className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-modal md:h-full" onClick={() => {handleModalClose()}}>
+    <div className="relative p-4 w-full max-w-3xl h-full md:h-auto" onClick={(e) => {e.stopPropagation()}}>
         {/* <!-- Modal content --> */}
         <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
                 {/* <!-- Modal header --> */}
-                <div className="flex justify-between mb-4 rounded-t sm:mb-5">
+                <div className="flex justify-between mb-4 rounded-t sm:mb-5 pb-1">
                     <div className="text-lg text-gray-900 md:text-xl dark:text-white">
-                        <h3 className="font-semibold ">
-                            Apple iMac 27”
+                        <h3 className="text-4xl font-semibold ">
+                            {project?.name}
                         </h3>
-                        <p className="font-bold">
-                            $2999
-                        </p>
                     </div>
                     <div>
                         <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex dark:hover:bg-gray-600 dark:hover:text-white" onClick={() => {handleModalClose()}}>
@@ -58,32 +81,29 @@ const ProjectModal = ({ projectid, setOpen }: { projectid: number, setOpen: Reac
                         </button>
                     </div>
                 </div>
+                {project?.imageUrl && <img src={project?.imageUrl} className="w-full h-64 rounded-lg h-full pb-6" />}
                 <dl>
-                    <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Details</dt>
-                    <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">Standard glass ,3.8GHz 8-core 10th-generation Intel Core i7 processor, Turbo Boost up to 5.0GHz, 16GB 2666MHz DDR4 memory, Radeon Pro 5500 XT with 8GB of GDDR6 memory, 256GB SSD storage, Gigabit Ethernet, Magic Mouse 2, Magic Keyboard - US.</dd>
-                    <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Category</dt>
-                    <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">Electronics/PC</dd>
+                    <dd className="mb-4 font-light text-lg text-gray-400 sm:mb-5 dark:text-gray-300 pb-2">{project?.description}</dd>
+                    <dt className="mb-2 font-semibold text-xl leading-none text-gray-900 dark:text-white">Tech Stack 💻🚀</dt>
+                    <div className='flex gap-3 pb-1'>
+                    {project?.stack.map((item, index) => (
+                        <div key={index} className="mb-4 font-light text-yellow-500 sm:mb-5 dark:text-yellow-400 px-6 py-2 rounded-full bg-gray-600">
+                            {item}
+                        </div>
+                    ))}
+                    </div>
                 </dl>
-                <div className="flex justify-between items-center">
-                    <div className="flex items-center space-x-3 sm:space-x-4">
-                        <button type="button" className="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                            <svg aria-hidden="true" className="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd"></path></svg>
-                            Edit
-                        </button>               
-                        <button type="button" className="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                            Preview
-                        </button>
-                    </div>              
-                    <button type="button" className="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
-                        <svg aria-hidden="true" className="w-5 h-5 mr-1.5 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd"></path></svg>
-                        Delete
-                    </button>
-                </div>
+                <a href={project?.projectUrl} target="_blank">
+                <button type="button" className="py-2.5 px-5 text-md font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                    <i className="fa-solid fa-up-right-from-square pr-2"></i>
+                    Visit
+                </button>
+                </a>
         </div>
         </div>
     </div>
     );
     }
 ;
-
+// make visit button right aligned
 export default ProjectModal;
