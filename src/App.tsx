@@ -5,10 +5,9 @@ import ProjectModal from './ProjectModal';
 import emailjs from '@emailjs/browser';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-const emailConfig = require('./config/email-config.json');
-const serviceId = emailConfig.serviceid;
-const templateId = emailConfig.templateid;
-const publicKey = emailConfig.publicKey;
+const serviceId = process.env.EMAIL_SERVICE_ID || 'defaultserviceid';
+const templateId = process.env.EMAIL_TEMPLATE_ID|| 'defaulttemplateid';
+const publicKey = process.env.EMAIL_PUBLIC_KEY;
 
 function App() {
   const [open, setOpen] = useState<boolean>(false);
