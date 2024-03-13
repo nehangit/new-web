@@ -1,8 +1,9 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState, useRef } from 'react';
 import image0 from './images/image0.jpeg';
 import './App.css';
 import ProjectModal from './ProjectModal';
 import emailjs from '@emailjs/browser';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const emailConfig = require('./config/email-config.json');
 const serviceId = emailConfig.serviceid;
@@ -12,6 +13,7 @@ const publicKey = emailConfig.publicKey;
 function App() {
   const [open, setOpen] = useState<boolean>(false);
   const [project, setProject] = useState<number>(-1);
+  const recaptchaRef = useRef<ReCAPTCHA | null>(null);
   const initform = {
     subject: "",
     from_name: "",
@@ -20,6 +22,7 @@ function App() {
   }
   const [formData, setFormData] = useState(initform);
   const [successMessage, setSuccessMessage] = useState("");
+
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     const new_value = event.target.value;
@@ -33,12 +36,21 @@ function App() {
   
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const recaptchaValue = recaptchaRef.current?.getValue();
+    if (!recaptchaValue) {
+      setSuccessMessage("Please complete the captcha");
+      return;
+    }
     if (!validateEmail(formData.reply_to)) {
         setSuccessMessage("Invalid email address");
         return;
     }
+    const params = {
+        ...formData,
+        'g-recaptcha-response': recaptchaValue
+    }
     emailjs
-      .send(serviceId, templateId, formData, {
+      .send(serviceId, templateId, params, {
         publicKey: publicKey,
       })
       .then(
@@ -106,7 +118,8 @@ function App() {
                     <i className="fa-brands fa-square-github"></i>
                     </button>
                   </a>
-                </li></ul>
+                </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -249,7 +262,7 @@ function App() {
             <div className="sm:container mx-auto">
                 <div className="w-full sm:flex">
                     <div className="sm:w-1/2 w-full">
-                        <h2 className="font-bold text-4xl mb-3 text-orange-300 pb-4">Get in touch!</h2>
+                        <h2 className="font-bold text-4xl mb-3 text-orange-300 pb-4">Get in touch...</h2>
                         <div className="mb-5">
                             <h3 className="text-2xl text-white">Location 🌍:</h3>
                             <p className="text-gray-400 text-xl">Urbana, IL - Albuquerque, NM</p>
@@ -290,13 +303,13 @@ function App() {
                                 </div>
                             </div>
 
-                            <div className="mt-5 grid grid-cols-1  gap-y-8 sm:grid-cols-6">
+                            <div className="mt-5 grid grid-cols-1 gap-y-8 sm:grid-cols-6">
                                 <div className="sm:col-span-4">
                                     <label htmlFor="message" className="block text-sm font-medium leading-6 text-gray-900">Message</label>
                                     <textarea required value={formData.message} name="message" id="message" onChange={handleTextAreaChange} className="block w-full outline-1 border border-1 flex-1 bg-transparent py-1.5 pl-3 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6" placeholder="Message"></textarea>
                                 </div>
                             </div>
-
+                            <ReCAPTCHA ref={recaptchaRef} sitekey='6LfH3ZYpAAAAAG0u97GUsmpQkiNCDgQTKSc17fdT'></ReCAPTCHA>
                             <div className="mt-5 grid grid-cols-1 gap-y-8 sm:grid-cols-6">
                                 <button type='submit' className="bg-gray-200 mx-auto w-32 text-center rounded-md p-2 border border-1 border-gray-100 hover:bg-gray-300 transition-all duration-100 ease-in-out">Submit</button>
                             </div>

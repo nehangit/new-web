@@ -29,7 +29,7 @@ const projects: Project[] = [
       {
         id: 2,
         name: "Personal Portfolio",
-        description: "Built a personal portfolio website to showcase my projects and skills. The website has a responsive and clean design, and is hosted on GitHub Pages.",
+        description: "Built a personal portfolio website to showcase my projects and skills. Implemented EmailJS and reCAPTCHA. The website has a responsive and clean design, and is hosted with Firebase.",
         stack: ["React (Typescript)", "Tailwind CSS"],
         projectUrl: "",
       },
