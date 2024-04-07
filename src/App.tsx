@@ -1,6 +1,5 @@
 import { ChangeEvent, FormEvent, useState, useRef } from 'react';
 import image0 from './images/image0.jpeg';
-import './App.css';
 import ProjectModal from './ProjectModal';
 import emailjs from '@emailjs/browser';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -23,13 +22,7 @@ function App() {
   const [formData, setFormData] = useState(initform);
   const [successMessage, setSuccessMessage] = useState("");
 
-
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-    const new_value = event.target.value;
-    setFormData({ ...formData, [event.target.name]: new_value });
-  }
-
-  function handleTextAreaChange(event: ChangeEvent<HTMLTextAreaElement>) {
+  function handleInputChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) {
     const new_value = event.target.value;
     setFormData({ ...formData, [event.target.name]: new_value });
   }
@@ -69,6 +62,7 @@ function App() {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return regex.test(email);
   }
+  
   return (
     <body className="h-screen">
 
@@ -108,14 +102,14 @@ function App() {
                 <ul className='flex justify-center gap-5'><li>
                   <a href="https://www.linkedin.com/in/nehan-tarefder" target="_blank">
                     <button className="bg-black border-0 rounded-lg shadow-lg box-border text-white flex items-center justify-center font-sans text-lg lg:text-xl min-w-[60px] min-h-[50px] w-full h-full px-3 whitespace-nowrap cursor-pointer transition-all duration-600 ease-in-out hover:bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 ">
-                    <i className="fa-brands fa-linkedin fa-lg"></i>
+                    <i className="fa-brands fa-linkedin fa-xl"></i>
                     </button>
                   </a>
                 </li>
                 <li>
                   <a href="https://github.com/nehangit" target="_blank">
                     <button className="bg-black border-0 rounded-lg shadow-lg box-border text-white flex items-center justify-center font-sans text-lg lg:text-xl min-w-[60px] min-h-[50px] w-full h-full px-3 whitespace-nowrap cursor-pointer transition-all duration-600 ease-in-out hover:bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 ">
-                    <i className="fa-brands fa-square-github"></i>
+                    <i className="fa-brands fa-square-github fa-xl"></i>
                     </button>
                   </a>
                 </li>
@@ -154,7 +148,7 @@ function App() {
                 <li className="mb-10 ms-4">
                     <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
                     <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-400">May 2024</time>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Sandia National Laboratories - Incoming MissionTech Intern</h3>
+                    <h3 className="text-lg font-semibold text-white">Sandia National Laboratories - Incoming MissionTech Intern</h3>
                     {/* <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Learn more <svg className="w-3 h-3 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/> 
               </svg></a>*/}
@@ -162,19 +156,19 @@ function App() {
                 <li className="mb-10 ms-4">
                     <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
                     <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-400">March 2024</time>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Caesar Research Group - Undergraduate Research Assistant (Backend Developer)</h3>
+                    <h3 className="text-lg font-semibold text-white">Caesar Research Group - Undergraduate Research Assistant (Backend Developer)</h3>
                     <p className="text-base font-normal text-gray-500 dark:text-gray-400">Tentatively: Using Flask to develop REST API endpoints, maintaining databases (MySQL, Postgres), and deploying the server (Docker, Nginx) for the PeopleWeave Project. </p>
                 </li>
                 <li className="mb-10 ms-4">
                     <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
                     <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-400">October 2023</time>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">ACM @ UIUC Infrastructure - Events API Team Member</h3>
+                    <h3 className="text-lg font-semibold text-white">ACM @ UIUC Infrastructure - Events API Team Member</h3>
                     <p className="text-base font-normal text-gray-500 dark:text-gray-400">Developing and deploying API endpoints for the website calendar using AWS Lambda and DynamoDB.</p>
                 </li>
                 <li className="ms-4">
                     <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
                     <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-400">June 2022</time>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Los Alamos National Laboratory - Intern @ CINT</h3>
+                    <h3 className="text-lg font-semibold text-white">Los Alamos National Laboratory - Intern @ CINT</h3>
                     <p className="text-base font-normal text-gray-500 dark:text-gray-400">Software/hardware integration for materials physics experiments using Python and LabVIEW. Data acquisition, visualization, and analysis using NumPy, Pandas, and Matplotlib</p>
                 </li>
               </ol>
@@ -261,7 +255,8 @@ function App() {
         <section className="sm:p-20 p-3" id="contact">
             <div className="sm:container mx-auto">
                 <div className="w-full sm:flex">
-                    <div className="sm:w-1/2 w-full">
+                    <div className="sm:w-1/2 w-full flex justify-center">
+                        <div>
                         <h2 className="font-bold text-4xl mb-3 text-orange-300 pb-4">Get in touch...</h2>
                         <div className="mb-5">
                             <h3 className="text-2xl text-white">Location 🌍:</h3>
@@ -273,6 +268,7 @@ function App() {
                             <h3 className="text-2xl text-white">Email 📧:</h3>
                             <a className="text-blue-500 underline text-xl" href="mailto:nehantarefder@gmail.com">nehantarefder@gmail.com</a> <br></br>
                             <a className="text-blue-500 underline text-xl" href="mailto:nehant2@illinois.edu">nehant2@illinois.edu</a>
+                        </div>
                         </div>
                     </div>
 
@@ -306,7 +302,7 @@ function App() {
                             <div className="mt-5 grid grid-cols-1 gap-y-8 sm:grid-cols-6">
                                 <div className="sm:col-span-4">
                                     <label htmlFor="message" className="block text-sm font-medium leading-6 text-gray-900">Message</label>
-                                    <textarea required value={formData.message} name="message" id="message" onChange={handleTextAreaChange} className="block w-full outline-1 border border-1 flex-1 bg-transparent py-1.5 pl-3 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6" placeholder="Message"></textarea>
+                                    <textarea required value={formData.message} name="message" id="message" onChange={handleInputChange} className="block w-full outline-1 border border-1 flex-1 bg-transparent py-1.5 pl-3 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6" placeholder="Message"></textarea>
                                 </div>
                             </div>
                             <ReCAPTCHA ref={recaptchaRef} sitekey='6LfH3ZYpAAAAAG0u97GUsmpQkiNCDgQTKSc17fdT'></ReCAPTCHA>
